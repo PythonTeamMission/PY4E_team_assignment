@@ -1,0 +1,39 @@
+#################### PY4E 2주차 연습문제 #####################
+# Try, Except 사용해 숫자만을 Input으로 받는 급여 계산 프로그램 제작#
+############################################################
+
+def print_main_message():
+    print('\n','==' * 20)
+    print('급여 계산 프로그램에 접속하셨습니다:)\n')
+
+def main():
+    while(1):
+        print_main_message()
+        try: 
+            hour_input = int(input('일하신 시간을 입력해주세요 : '))
+        except:
+            print('일한 시간을 숫자로 입력해주세요!')
+            continue
+        try:
+            rate_input = int(input('시급을 입력해주세요: '))
+        except:
+            print('시급을 숫자로 입력해주세요!')
+            continue
+
+        if (hour_input >= 1 and rate_input >= 1):
+            if (hour_input > 40):
+                pay = hour_input * rate_input
+                overtime_fee = (hour_input - 40) * (rate_input * 0.5)
+                total_pay = pay + overtime_fee
+                print (f'\n40 시간 일하셔서 Overtime이 적용됩니다.\n{hour_input}시간 일하셔서 급여는 {total_pay}원입니다.')
+            
+            else:
+                pay = hour_input * rate_input
+                print(f'{hour_input}시간 일하셔서 급여는 {pay}원입니다.')
+        else:
+            print('시간 또는 시급이 0 이하입니다. 다시 입력해주세요')
+            
+
+
+if __name__ == "__main__":
+	main()
