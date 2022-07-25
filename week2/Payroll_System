@@ -23,7 +23,7 @@ def main():
         if (hour_input >= 1 and rate_input >= 1):
             if (hour_input > 40):
                 pay = hour_input * rate_input
-                overtime_fee = (hour_input - 40) * (rate_input * 0.5)
+                overtime_fee = (hour_input - 40) * (rate_input * 1.5)
                 total_pay = pay + overtime_fee
                 print (f'\n40 시간 일하셔서 Overtime이 적용됩니다.\n{hour_input}시간 일하셔서 급여는 {total_pay}원입니다.')
             
