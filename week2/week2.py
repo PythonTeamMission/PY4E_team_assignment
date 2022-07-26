@@ -329,8 +329,10 @@ def getBusFare(age, payType):
 
 
 #함수 호출
-if payType != "현금" or payType != "카드":
+if not ((payType == "현금") or (payType == "카드")):
     print("지불 유형을 잘못 작성하셨습니다.\n프로그램을 종료합니다.")
 else: 
     getBusFare(age, payType)
+
+
 
