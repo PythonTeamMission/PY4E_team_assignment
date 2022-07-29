@@ -35,17 +35,12 @@ gugudan(number)
 # 2. 조건에서 1~9까지 범위를 제한하지 않음
 #따라서 구구단의 범위를 늘렸습니다.
 
-"""
-    i = None
-    while result<= 50:
-        if i == None:
-            i = 1
-"""
-
-print("???????????")
-
 def printGugu(dan):
     print(f"----- {dan} 단 ----- ")
+    i = 1
+    result = 1
+    while result <= 50:
+
         result = dan * i
         if result > 50:
           break
@@ -53,39 +48,45 @@ def printGugu(dan):
 
         i += 2
 
+
     print("구구단 출력이 완료되었습니다.")
     print("----------------------------")
     runAgain()
 
 
-#사용자 입력값을 받는 함수
+# 사용자 입력값을 받는 함수
 def getInput():
     print("\n***************************************************")
     print("  50보다 작은 수를 출력하는 홀수 구구단 프로그램입니다.")
     print("***************************************************")
 
-    dan = input("몇단을 출력할까요?")
+    dan = input("몇단을 출력할까요? :")
 
+    # 입력테스트
+    print(dan)
     if dan.isnumeric():
-        printGugu(int(dan))
+        myDan = int(dan)
+        printGugu(myDan)
+    else:
+        print("잘못된 값을 입력하셨습니다.")
+        runAgain()
+
+    return dan
+
+
+# 프로그램 시작/종료 함수
+def runAgain():
+    again = input("프로그램을 다시 시작하시겠습니까? (Y/N)")
+    if (again.lower()) == "y":
+        getInput()
+    elif (again.lower()) == "n":
+        print("프로그램을 종료합니다.")
     else:
         print("잘못된 값을 입력하셨습니다.")
         runAgain()
 
 
-#프로그램 시작/종료 함수
-def runAgain():
-    again = input("프로그램을 다시 시작하시겠습니까? (Y/N)")
-    if (again.lower()) == y:
-        main()
-    elif (again.lower()) == n:
-        print("프로그램을 종료합니다.")
-    else : 
-        print("잘못된 값을 입력하셨습니다.")
-        runAgain()
-
-
-main()
+getInput()
 
 
 """
