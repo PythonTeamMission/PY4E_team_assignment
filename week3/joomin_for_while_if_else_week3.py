@@ -26,6 +26,60 @@ gugudan(number)
 
 """
 
+#사용자가 프로그램의 시작/종료 선택을 할 수 있도록 구조를 나누었습니다.
+#강의에서 배운 lower을 통해 y,n이 대/소문자에 관계없이 작동하도록 함수를 만들었습니다.
+#구구단을 처음에는 1~9까지만 정해두었다가
+# 1. 3x11은 50보다 작은 값
+# 2. 조건에서 1~9까지 범위를 제한하지 않음
+#따라서 구구단의 범위를 늘렸습니다.
+
+
+def printGugu(dan):
+    print(f"----- {dan} 단 ----- ")
+
+    i = int(1)
+    while result<= 50:
+        result = dan*i
+        if result <= 50:
+            print(f"{dan} X {i} = {result}")
+        else:
+            break
+
+        i+2
+
+    print("구구단 출력이 완료되었습니다.")
+    print("----------------------------")
+    runAgain()
+
+
+#사용자 입력값을 받는 함수
+def getInput():
+    print("\n***************************************************")
+    print("  50보다 작은 수를 출력하는 홀수 구구단 프로그램입니다.")
+    print("***************************************************")
+
+    dan = input("몇단을 출력할까요?")
+
+    if dan.isnumeric():
+        printGugu(int(dan))
+    else:
+        print("잘못된 값을 입력하셨습니다.")
+        runAgain()
+
+
+#프로그램 시작/종료 함수
+def runAgain():
+    again = input("프로그램을 다시 시작하시겠습니까? (Y/N)")
+    if (again.lower()) == y:
+        main()
+    elif (again.lower()) == n:
+        print("프로그램을 종료합니다.")
+    else : 
+        print("잘못된 값을 입력하셨습니다.")
+        runAgain()
+
+
+main()
 
 
 """
