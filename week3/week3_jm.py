@@ -46,15 +46,12 @@ print("???????????")
 
 def printGugu(dan):
     print(f"----- {dan} 단 ----- ")
-    i = 1
-    while result<= 50:
-        result = dan*i
-        if result <= 50:
-            print(f"{dan} X {i} = {result}")
-        else:
-            break
+        result = dan * i
+        if result > 50:
+          break
+        print(f"{dan} X {i} = {result}")
 
-        i+2
+        i += 2
 
     print("구구단 출력이 완료되었습니다.")
     print("----------------------------")
