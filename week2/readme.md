@@ -8,7 +8,7 @@
                     
 ===============================================================
 
-# Q1 - jm
+## Q1 - jm
 
 
 import random
@@ -25,9 +25,9 @@ def printWinner(winner):
     else:
         print("\n 축하합니다! 당신의 승리입니다!\n")
 
-# 가위바위보 진행 함수
 
-
+/# 가위바위보 진행 함수
+ 
 def rockPaperScissors(my, com):
     if com == my:
         print("무승부 입니다!")
@@ -92,7 +92,7 @@ elif score >= 90:
 
 
 
-# Q3 - Noas
+## Q3 - Noas
 
 
 Q3 문제에서 Noas님의 제출에서 수정하면 좋을 것 같은 부분이 있었습니다. 먼저 grader함수의 인자로 이미 숫자형이 들어오기 때문에 int 함수는 빼도 됩니다. 그리고, 학점을 받을 변수를 설정해서 각 조건마다 학점만 저장하고, 모든 조건을 마친 후에 한꺼번에 print 하는 것입니다.
@@ -100,7 +100,7 @@ elif score < 60:
     grade = "F"
 ...
 
-# 모든 조건을 거친 후
+/# 모든 조건을 거친 후
 
 print("학생 이름 :", name)
 print("점수 :", score)
