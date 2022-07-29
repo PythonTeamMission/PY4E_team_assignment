@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 # 모두를 위한 파이썬 PY4E 
 # 3주차 팀 과제
 # 팀: 턴태코치_2팀 / 작성자: jm / 기여자: chabbo, jm, Noas / 작성일: 220729
 # 👍👍3주차 미션 목적 - 반복문, 조건문 함수 익히기
+
 
 """
 
@@ -33,11 +35,18 @@ gugudan(number)
 # 2. 조건에서 1~9까지 범위를 제한하지 않음
 #따라서 구구단의 범위를 늘렸습니다.
 
+"""
+    i = None
+    while result<= 50:
+        if i == None:
+            i = 1
+"""
+
+print("???????????")
 
 def printGugu(dan):
     print(f"----- {dan} 단 ----- ")
-
-    i = int(1)
+    i = 1
     while result<= 50:
         result = dan*i
         if result <= 50:
