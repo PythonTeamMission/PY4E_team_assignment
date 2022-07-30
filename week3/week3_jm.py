@@ -32,19 +32,12 @@ gugudan(number)
 #강의에서 배운 lower을 통해 y,n이 대/소문자에 관계없이 작동하도록 함수를 만들었습니다.
 #구구단을 처음에는 1~9까지만 정해두었다가 구구단의 범위를 늘렸습니다.
 
-<<<<<<< HEAD
-=======
 
->>>>>>> jm
 def printGugu(dan):
     print(f"----- {dan} 단 ----- ")
     i = 1
     result = 1
     while result <= 50:
-<<<<<<< HEAD
-
-=======
->>>>>>> jm
         result = dan * i
         if result > 50:
           break
@@ -66,8 +59,6 @@ def getInput():
 
     dan = input("몇단을 출력할까요? :")
 
-    # 입력테스트
-    print(dan)
     if dan.isnumeric():
         myDan = int(dan)
         printGugu(myDan)
@@ -92,10 +83,7 @@ def runAgain():
 
 getInput()
 
-<<<<<<< HEAD
-=======
 
->>>>>>> jm
 
 """
 📌Q2. 가위바위보 업그레이드 버젼을 함수로 만들어 봅시다. 아래와 같은 조건을 만족해 주세요.
@@ -181,9 +169,17 @@ class playRPSGame:
 
         playCounts = input("몇 판을 진행하시겠습니까? :")
 
+        
         if playCounts.isnumeric():
             counts = int(playCounts)
-            runIterator(counts)
+            runIterator(counts)     #???????????????? 왜 인식이 안되는걸까???????????????????????
+            """
+            curCount = 0
+            while curCount < counts:
+            runGame()
+            curCount = curCount + 1
+            print("test4:: ", curCount)
+            """
 
         elif checkGameExit() == "이어하기" :
             introRPS()
