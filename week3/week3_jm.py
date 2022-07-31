@@ -186,11 +186,18 @@ class playRPSGame:
                 curCount += 1
                 print("test2:: ", curCount)
 
+
         except:
             print("입력값이 올바르지 않습니다.")
             p.checkGameExit() == "이어하기"
             p.introRPS()
 
+
+    # 승자 출력 함수
+    def printWinner(winner):
+        #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
+        if winner == 0: print("\n컴퓨터의 승리입니다!\n")
+        else: print("\n 축하합니다! 당신의 승리입니다!\n")
 
     # 승자 출력 함수
     def printWinner(winner):
@@ -221,9 +228,6 @@ class playRPSGame:
                 p.printWinner(0)
             else:           # 컴퓨터 - 바위
                 p.printWinner(1)
-
-
-
 
 
 p = playRPSGame
@@ -260,9 +264,20 @@ find_even_number(n, m)
 
 """
 
-def checkType(var):
-    if var.isnumeric and var > 0:
+
+# 입력 오류를 더 깔끔하게 관리하는 방법이 있는지 궁금하네요!
+
+
+def checkMinus(var):
+    if var > 0:
         return int(var)
+    else:
+        checkType(input("0보다 큰 숫자로 입력해주세요. : "))
+
+
+def checkType(var):
+    if var.isnumeric:
+        checkMinus(var)
     else :
         print("잘못된 값을 입력하셨습니다.")
         checkType(input("반드시 정수로 입력해주세요 : "))
@@ -306,7 +321,7 @@ def getCenterNum():
         sec = input("마지막 숫자를 입력해주세요 : ")
         secNum = checkType(sec)
         secNum = checkLastNum(firNum, secNum)
-            
+
 
         print("입력된 첫 숫자 : ", firNum)
         print("입력된 마지막 숫자 : ", secNum)
@@ -328,8 +343,6 @@ def getCenterNum():
                     #중앙값
                     if numbers[int(medianIdx)] == var:
                         print(f"값 : {var}  = * 중앙값 *")
-
-
 
         
 
