@@ -28,6 +28,7 @@ gugudan(number)
 
 """
 
+"""
 #사용자가 프로그램의 시작/종료 선택을 할 수 있도록 구조를 나누었습니다.
 #강의에서 배운 lower을 통해 y,n이 대/소문자에 관계없이 작동하도록 함수를 만들었습니다.
 #구구단을 처음에는 1~9까지만 정해두었다가 구구단의 범위를 늘렸습니다.
@@ -82,7 +83,7 @@ def runAgain():
 
 
 getInput()
-
+"""
 
 
 """
@@ -118,19 +119,34 @@ rsp_advanced(games)
 # 파이썬은 객체지향인데 어째서 같은 클래스 내에서 아래 있는 함수를 인지하지 못하나요? 
 # 하단에 작성한 함수를 상단에서 부를 수 있는 방법이 있을까요 ㅠㅜ?
 
+"""
 class playRPSGame:
 
     comRPS = ["가위", "바위", "보"]
+    curCount = 0
 
-    #def __init__(self):
-    #    introRPS()
+    def __init__(self):
+        global curCount
+        curCount = 0
 
     def __del__(self):
         print("프로그램을 종료합니다.")
 
+
+    # 게임 종료 확인 함수
+    def checkGameExit():
+            input("게임을 종료할까요?(Y/N) :")
+
+            if (again.lower()) == "y":
+                thisGame = playRPSGame()
+                del thisGame
+            elif (again.lower()) == "n":
+                return "이어하기"
+
     
     # 게임 값 입력 함수
     def runGame():
+        global curCount
         print("test5:: ", curCount)
 
         computer = comRPS[random.randint(0, 2)]
@@ -145,69 +161,35 @@ class playRPSGame:
 
             print("\n당신은 " + myRPS + " 를 냈습니다!")
             print("컴퓨터는 " + computer + " 를 냈습니다!")
-            getGameResult(myRPS, computer)
+            p.getGameResult(myRPS, computer)
 
         except:
             print("잘못된 값을 입력하셨습니다.")
-            if checkGameExit() == "이어하기":
-                runGame()
+            if p.checkGameExit() == "이어하기":
+                p.runGame()
 
-
-    def runIterator(counts):
-        curCount = 0
-        while curCount < counts:
-            runGame()
-            curCount = curCount + 1
-            print("test4:: ", curCount)
-            
 
     # 가위바위보 게임 인트로
     def introRPS():
+        global curCount
+
         print("\n***************************************************")
         print("  가위 바위 보 게임입니다.")
         print("***************************************************")
 
-        playCounts = input("몇 판을 진행하시겠습니까? :")
+        playCounts = input("몇 판을 진행하시겠습니까? 숫자로 입력해주세요. :")
 
-        
-        if playCounts.isnumeric():
-            counts = int(playCounts)
-            runIterator(counts)     #???????????????? 왜 인식이 안되는걸까???????????????????????
-            """
-            curCount = 0
-            while curCount < counts:
-            runGame()
-            curCount = curCount + 1
-            print("test4:: ", curCount)
-            """
+        try:
+            for i in range(0, int(playCounts)):
+                print("test1:: ", curCount)
+                p.runGame()
+                curCount += 1
+                print("test2:: ", curCount)
 
-        elif checkGameExit() == "이어하기" :
-            introRPS()
-
-
-
-    # 게임 결과 출력 함수
-    def getGameResult(my, com):
-        if com == my:
-            print("무승부 입니다!")
-
-        elif my == "가위":      # 사람 - 가위
-            if com == "바위":
-                printWinner(0)
-            else:           # 컴퓨터 - 보
-                printWinner(1)
-
-        elif my == "바위":      # 사람 - 바위
-            if com == "가위":
-                printWinner(1)
-            else:           # 컴퓨터 - 보
-                printWinner(0)
-
-        elif my == "보":        # 사람 - 보
-            if com == "가위":
-                printWinner(0)
-            else:           # 컴퓨터 - 바위
-                printWinner(1)
+        except:
+            print("입력값이 올바르지 않습니다.")
+            p.checkGameExit() == "이어하기"
+            p.introRPS()
 
 
     # 승자 출력 함수
@@ -217,19 +199,36 @@ class playRPSGame:
         else: print("\n 축하합니다! 당신의 승리입니다!\n")
 
 
-    # 게임 종료 확인 함수
-    def checkGameExit():
-            input("게임을 종료할까요?(Y/N) :")
+    # 게임 결과 출력 함수
+    def getGameResult(my, com):
+        if com == my:
+            print("무승부 입니다!")
 
-            if (again.lower()) == "y":
-                thisGame = playRPSGame()
-                del thisGame
-            elif (again.lower()) == "n":
-                return "이어하기"
+        elif my == "가위":      # 사람 - 가위
+            if com == "바위":
+                p.printWinner(0)
+            else:           # 컴퓨터 - 보
+                p.printWinner(1)
 
-            
+        elif my == "바위":      # 사람 - 바위
+            if com == "가위":
+                p.printWinner(1)
+            else:           # 컴퓨터 - 보
+                p.printWinner(0)
+
+        elif my == "보":        # 사람 - 보
+            if com == "가위":
+                p.printWinner(0)
+            else:           # 컴퓨터 - 바위
+                p.printWinner(1)
+
+
+
+
+
 p = playRPSGame
 p.introRPS()
+"""
 
 """
 📌Q3. 2개의 숫자를 입력하여 그 사이에 짝수만 출력하는 함수를 만들어 봅시다. 그리고 중앙값도 함께 출력 해봅시다.(단, 중앙값이 짝수가 아닐 경우에는 중앙값은 출력을 하지 않고, 짝수인 수만 출력한다)
@@ -260,6 +259,81 @@ find_even_number(n, m)
 10 짝수
 
 """
+
+def checkType(var):
+    if var.isnumeric and var > 0:
+        return int(var)
+    else :
+        print("잘못된 값을 입력하셨습니다.")
+        checkType(input("반드시 정수로 입력해주세요 : "))
+
+
+def checkLastNum(fir, sec):
+    if sec >= fir:
+        return int(sec)
+    else :
+        print("마지막 값은 처음 값보다 큰 수로 입력해주세요.")
+        last = checkType(input("마지막 값을 다시 입력해주세요 : "))
+        checkLastNum(fir, last)
+
+
+"""
+#value값이 중앙값
+def getMedian(numbers):
+        median = 0
+        index = 0
+        if len(numbers)%2 == 0:
+            index = len(numbers)//2
+            median = (numbers[index-1]+numbers[index])/2
+        else:
+            index = len(numbers)//2+1
+            median = numbers[index]
+
+        if int(median) % 2 == 0:
+            return median
+"""
+    
+
+def getCenterNum():
+    
+        print("\n***************************************************")
+        print("  중앙값이 짝수인지 확인하는 프로그램입니다.")
+        print("***************************************************")
+
+        fir = input("처음 숫자를 입력해주세요 : ")
+        firNum = checkType(fir)
+
+        sec = input("마지막 숫자를 입력해주세요 : ")
+        secNum = checkType(sec)
+        secNum = checkLastNum(firNum, secNum)
+            
+
+        print("입력된 첫 숫자 : ", firNum)
+        print("입력된 마지막 숫자 : ", secNum)
+
+        numbers = [i for i in range(firNum, secNum+1)]
+        numbers.sort()
+        
+        medianIdx = len(numbers)/2
+
+        for i, var in enumerate(numbers):
+            
+            #값이 0이 아님
+            if var != 0 :
+
+                #짝수
+                if var % 2 == 0 :
+                    print(f"값 : {var}  = 짝수")
+
+                    #중앙값
+                    if numbers[int(medianIdx)] == var:
+                        print(f"값 : {var}  = * 중앙값 *")
+
+
+
+        
+
+getCenterNum()
 
 
 
