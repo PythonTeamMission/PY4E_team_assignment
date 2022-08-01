@@ -189,6 +189,7 @@ class playRPSGame:
                 playRPSGame.runGame()
                 curCount += 1
 
+<<<<<<< HEAD
                 if i == playCounts-1:
                     print("================ 게임종료 =================")
                     print(f"당신의 전적 : {winCount}승 / {drawCount}무 / {loseCount}패")
@@ -200,6 +201,10 @@ class playRPSGame:
                     print("===========================================")
 
         else:
+=======
+
+        except:
+>>>>>>> b652458c8a12d2970d59f7c2d42678b10b166b4d
             print("입력값이 올바르지 않습니다.")
             playRPSGame.checkGameExit() == "이어하기"
             playRPSGame.introRPS()
@@ -210,6 +215,7 @@ class playRPSGame:
         global loseCount
         global winCount
 
+<<<<<<< HEAD
         score = com - userNum
         if userNum == com :
             drawCount += 1
@@ -221,6 +227,37 @@ class playRPSGame:
         else :
             winCount += 1
             print("\n 축하합니다! 당신의 승리입니다!\n")
+=======
+    # 승자 출력 함수
+    def printWinner(winner):
+        #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
+        if winner == 0: print("\n컴퓨터의 승리입니다!\n")
+        else: print("\n 축하합니다! 당신의 승리입니다!\n")
+
+
+    # 게임 결과 출력 함수
+    def getGameResult(my, com):
+        if com == my:
+            print("무승부 입니다!")
+
+        elif my == "가위":      # 사람 - 가위
+            if com == "바위":
+                p.printWinner(0)
+            else:           # 컴퓨터 - 보
+                p.printWinner(1)
+
+        elif my == "바위":      # 사람 - 바위
+            if com == "가위":
+                p.printWinner(1)
+            else:           # 컴퓨터 - 보
+                p.printWinner(0)
+
+        elif my == "보":        # 사람 - 보
+            if com == "가위":
+                p.printWinner(0)
+            else:           # 컴퓨터 - 바위
+                p.printWinner(1)
+>>>>>>> b652458c8a12d2970d59f7c2d42678b10b166b4d
 
 
 p = playRPSGame
@@ -256,6 +293,7 @@ find_even_number(n, m)
 10 짝수
 
 """
+
 
 # 입력 오류를 더 깔끔하게 관리하는 방법이 있는지 궁금하네요!
 
@@ -313,6 +351,7 @@ def getCenterNum():
         sec = input("마지막 숫자를 입력해주세요 : ")
         secNum = checkType(sec)
         secNum = checkLastNum(firNum, secNum)
+
 
         print("입력된 첫 숫자 : ", firNum)
         print("입력된 마지막 숫자 : ", secNum)
