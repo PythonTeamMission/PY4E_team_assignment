@@ -29,11 +29,11 @@ gugudan(number)
 
 """
 
-"""
+
 #사용자가 프로그램의 시작/종료 선택을 할 수 있도록 구조를 나누었습니다.
 #강의에서 배운 lower을 통해 y,n이 대/소문자에 관계없이 작동하도록 함수를 만들었습니다.
 #구구단을 처음에는 1~9까지만 정해두었다가 구구단의 범위를 늘렸습니다.
-
+"""
 
 def printGugu(dan):
     print(f"----- {dan} 단 ----- ")
@@ -63,6 +63,11 @@ def getInput():
 
     if dan.isnumeric():
         myDan = int(dan)
+
+        if int(dan) <= 0:
+            print("잘못된 값을 입력하셨습니다.")
+            runAgain()
+
         printGugu(myDan)
     else:
         print("잘못된 값을 입력하셨습니다.")
@@ -189,7 +194,6 @@ class playRPSGame:
                 playRPSGame.runGame()
                 curCount += 1
 
-<<<<<<< HEAD
                 if i == playCounts-1:
                     print("================ 게임종료 =================")
                     print(f"당신의 전적 : {winCount}승 / {drawCount}무 / {loseCount}패")
@@ -201,10 +205,7 @@ class playRPSGame:
                     print("===========================================")
 
         else:
-=======
 
-        except:
->>>>>>> b652458c8a12d2970d59f7c2d42678b10b166b4d
             print("입력값이 올바르지 않습니다.")
             playRPSGame.checkGameExit() == "이어하기"
             playRPSGame.introRPS()
@@ -215,7 +216,7 @@ class playRPSGame:
         global loseCount
         global winCount
 
-<<<<<<< HEAD
+
         score = com - userNum
         if userNum == com :
             drawCount += 1
@@ -227,7 +228,13 @@ class playRPSGame:
         else :
             winCount += 1
             print("\n 축하합니다! 당신의 승리입니다!\n")
-=======
+
+    # 승자 출력 함수
+    def printWinner(winner):
+        #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
+        if winner == 0: print("\n컴퓨터의 승리입니다!\n")
+        else: print("\n 축하합니다! 당신의 승리입니다!\n")
+
     # 승자 출력 함수
     def printWinner(winner):
         #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
@@ -257,7 +264,6 @@ class playRPSGame:
                 p.printWinner(0)
             else:           # 컴퓨터 - 바위
                 p.printWinner(1)
->>>>>>> b652458c8a12d2970d59f7c2d42678b10b166b4d
 
 
 p = playRPSGame
