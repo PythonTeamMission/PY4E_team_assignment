@@ -4,6 +4,7 @@
 # 팀: 턴태코치_2팀 / 작성자: jm / 기여자: chabbo, jm, Noas / 작성일: 220729
 # 👍👍3주차 미션 목적 - 반복문, 조건문 함수 익히기
 
+import random
 
 """
 
@@ -119,15 +120,11 @@ rsp_advanced(games)
 # 파이썬은 객체지향인데 어째서 같은 클래스 내에서 아래 있는 함수를 인지하지 못하나요? 
 # 하단에 작성한 함수를 상단에서 부를 수 있는 방법이 있을까요 ㅠㅜ?
 
-"""
+
 class playRPSGame:
-
-    comRPS = ["가위", "바위", "보"]
-    curCount = 0
-
-    def __init__(self):
-        global curCount
-        curCount = 0
+    drawCount = 0
+    loseCount = 0
+    winCount = 0
 
     def __del__(self):
         print("프로그램을 종료합니다.")
@@ -135,43 +132,48 @@ class playRPSGame:
 
     # 게임 종료 확인 함수
     def checkGameExit():
-            input("게임을 종료할까요?(Y/N) :")
+            again = input("게임을 종료할까요?(Y/N) :")
 
-            if (again.lower()) == "y":
+            if (again.lower()) == "n":
+                return "이어하기"
+            elif (again.lower()) == "y":
                 thisGame = playRPSGame()
                 del thisGame
-            elif (again.lower()) == "n":
-                return "이어하기"
+            else: 
+                print("계속하려면 'Y' / 종료하려면 'N' 을 입력해주세요.")
+                checkGameExit()
 
     
     # 게임 값 입력 함수
     def runGame():
-        global curCount
-        print("test5:: ", curCount)
+        comRPS = ["가위", "바위", "보"]
 
-        computer = comRPS[random.randint(0, 2)]
+        com = random.randint(0, 2)
+        computer = comRPS[com]
         print("\n         *** 게임 시작 ***         \n")
         myRPS = input("\n'가위', '바위', '보' 혹은 0(가위),1(바위),2(보)를 입력해주세요: ")
 
         try:
             if myRPS.isnumeric():
-                myRPS = comRPS[int(myRPS)]
+                mStrRPS = comRPS[int(myRPS)]
             elif myRPS not in comRPS:
                 raise Exception()
 
-            print("\n당신은 " + myRPS + " 를 냈습니다!")
+            print("\n당신은 " + mStrRPS + " 를 냈습니다!")
             print("컴퓨터는 " + computer + " 를 냈습니다!")
-            p.getGameResult(myRPS, computer)
+            playRPSGame.getRPSResult(mStrRPS, int(myRPS), com)
 
         except:
             print("잘못된 값을 입력하셨습니다.")
-            if p.checkGameExit() == "이어하기":
-                p.runGame()
+            if playRPSGame.checkGameExit() == "이어하기":
+                playRPSGame.runGame()
 
 
     # 가위바위보 게임 인트로
     def introRPS():
-        global curCount
+        global drawCount
+        global loseCount
+        global winCount
 
         print("\n***************************************************")
         print("  가위 바위 보 게임입니다.")
@@ -179,56 +181,51 @@ class playRPSGame:
 
         playCounts = input("몇 판을 진행하시겠습니까? 숫자로 입력해주세요. :")
 
-        try:
+
+        if playCounts.isnumeric():
+            curCount=0
+
             for i in range(0, int(playCounts)):
-                print("test1:: ", curCount)
-                p.runGame()
+                playRPSGame.runGame()
                 curCount += 1
-                print("test2:: ", curCount)
 
-        except:
+                if i == playCounts-1:
+                    print("================ 게임종료 =================")
+                    print(f"당신의 전적 : {winCount}승 / {drawCount}무 / {loseCount}패")
+                    print(f"컴퓨터의 전적 : {loseCount}승 / {drawCount}무 / {winCount}패")
+
+                if winCount > loseCount:
+                    print("===========================================")
+                    print("  🎉 당신의 승리입니다! 축하합니다 !! 🎉")
+                    print("===========================================")
+
+        else:
             print("입력값이 올바르지 않습니다.")
-            p.checkGameExit() == "이어하기"
-            p.introRPS()
+            playRPSGame.checkGameExit() == "이어하기"
+            playRPSGame.introRPS()
 
 
-    # 승자 출력 함수
-    def printWinner(winner):
-        #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
-        if winner == 0: print("\n컴퓨터의 승리입니다!\n")
-        else: print("\n 축하합니다! 당신의 승리입니다!\n")
+    def getRPSResult(user, userNum, com):
+        global drawCount
+        global loseCount
+        global winCount
 
-
-    # 게임 결과 출력 함수
-    def getGameResult(my, com):
-        if com == my:
+        score = com - userNum
+        if userNum == com :
+            drawCount += 1
             print("무승부 입니다!")
 
-        elif my == "가위":      # 사람 - 가위
-            if com == "바위":
-                p.printWinner(0)
-            else:           # 컴퓨터 - 보
-                p.printWinner(1)
-
-        elif my == "바위":      # 사람 - 바위
-            if com == "가위":
-                p.printWinner(1)
-            else:           # 컴퓨터 - 보
-                p.printWinner(0)
-
-        elif my == "보":        # 사람 - 보
-            if com == "가위":
-                p.printWinner(0)
-            else:           # 컴퓨터 - 바위
-                p.printWinner(1)
-
-
-
+        elif score == 2 or score == -2:
+            loseCount += 1
+            print("\n컴퓨터의 승리입니다!\n")
+        else :
+            winCount += 1
+            print("\n 축하합니다! 당신의 승리입니다!\n")
 
 
 p = playRPSGame
 p.introRPS()
-"""
+
 
 """
 📌Q3. 2개의 숫자를 입력하여 그 사이에 짝수만 출력하는 함수를 만들어 봅시다. 그리고 중앙값도 함께 출력 해봅시다.(단, 중앙값이 짝수가 아닐 경우에는 중앙값은 출력을 하지 않고, 짝수인 수만 출력한다)
