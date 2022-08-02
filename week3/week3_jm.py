@@ -28,16 +28,16 @@ gugudan(number)
 
 """
 
-"""
+
 #사용자가 프로그램의 시작/종료 선택을 할 수 있도록 구조를 나누었습니다.
 #강의에서 배운 lower을 통해 y,n이 대/소문자에 관계없이 작동하도록 함수를 만들었습니다.
-#구구단을 처음에는 1~9까지만 정해두었다가 구구단의 범위를 늘렸습니다.
-
+#처음에는 1~9까지만 정해두었다가 구구단의 범위를 늘렸습니다.
 
 def printGugu(dan):
     print(f"----- {dan} 단 ----- ")
     i = 1
     result = 1
+
     while result <= 50:
         result = dan * i
         if result > 50:
@@ -46,7 +46,6 @@ def printGugu(dan):
 
         i += 2
 
-
     print("구구단 출력이 완료되었습니다.")
     print("----------------------------")
     runAgain()
@@ -54,17 +53,21 @@ def printGugu(dan):
 
 # 사용자 입력값을 받는 함수
 def getInput():
-    print("\n***************************************************")
-    print("  50보다 작은 수를 출력하는 홀수 구구단 프로그램입니다.")
-    print("***************************************************")
+    print("\n******************************************************")
+    print("  홀수를 곱하여 50보다 작은 수를 출력하는 구구단 프로그램입니다.")
+    print("******************************************************")
 
     dan = input("몇단을 출력할까요? :")
 
-    if dan.isnumeric():
-        myDan = int(dan)
-        printGugu(myDan)
-    else:
-        print("잘못된 값을 입력하셨습니다.")
+    try :
+        dan = int(dan)
+        if int(dan) > 0 and int(dan) < 51 :
+            printGugu(dan)
+        else:
+            raise Exception()
+        
+    except:
+        print("잘못된 값을 입력하셨습니다. 1~50 사이의 정수를 입력해주세요.")
         runAgain()
 
     return dan
@@ -83,7 +86,6 @@ def runAgain():
 
 
 getInput()
-"""
 
 
 """
@@ -116,123 +118,127 @@ rsp_advanced(games)
 """
 
 # 중간에 프로그램을 종료하기 위해 방법을 찾다가 생성자, 소멸자를 알게되어 사용해보았습니다.. 맞는 사용법인지 모르겠네요
-# 파이썬은 객체지향인데 어째서 같은 클래스 내에서 아래 있는 함수를 인지하지 못하나요? 
-# 하단에 작성한 함수를 상단에서 부를 수 있는 방법이 있을까요 ㅠㅜ?
+# 파이썬은 객체지향인데 어째서 같은 클래스 내에서 아래 있는 함수를 인지하지 못하나요? 하단에 작성한 함수를 상단에서 부를 수 있는 방법이 있을까요 ㅠㅜ?
 
-"""
+import random
+
 class playRPSGame:
+    drawCount = 0
+    loseCount = 0
+    winCount = 0
 
-    comRPS = ["가위", "바위", "보"]
-    curCount = 0
-
-    def __init__(self):
-        global curCount
-        curCount = 0
+    def __init__(self): #왜 실행이 안되지?
+        print("\n         *** 게임 시작 ***         \n")
 
     def __del__(self):
         print("프로그램을 종료합니다.")
 
-
     # 게임 종료 확인 함수
     def checkGameExit():
-            input("게임을 종료할까요?(Y/N) :")
+            again = input("게임을 종료할까요?(Y/N) :")
 
-            if (again.lower()) == "y":
+            if (again.lower()) == "n":
+                return "이어하기"
+            elif (again.lower()) == "y":
                 thisGame = playRPSGame()
                 del thisGame
-            elif (again.lower()) == "n":
-                return "이어하기"
+                return None
+            else: 
+                print("계속하려면 'Y' / 종료하려면 'N' 을 입력해주세요.")
+                return playRPSGame.checkGameExit()
 
     
+    def errorAdapter():
+            print("잘못된 값을 입력하셨습니다.")
+            if playRPSGame.checkGameExit() == "이어하기":
+                playRPSGame.runGame()
+
     # 게임 값 입력 함수
     def runGame():
-        global curCount
-        print("test5:: ", curCount)
+        comRPS = ["가위", "바위", "보"]
 
-        computer = comRPS[random.randint(0, 2)]
-        print("\n         *** 게임 시작 ***         \n")
-        myRPS = input("\n'가위', '바위', '보' 혹은 0(가위),1(바위),2(보)를 입력해주세요: ")
+        com = random.randint(0, 2)
+        computer = comRPS[com]
+        myRPS = input("'가위', '바위', '보' 혹은 0(가위),1(바위),2(보)를 입력해주세요: ")
 
-        try:
-            if myRPS.isnumeric():
-                myRPS = comRPS[int(myRPS)]
-            elif myRPS not in comRPS:
-                raise Exception()
+        #1. type오류 먼저 확인 
+        #2. 범위 오류 제어
+        if myRPS.isnumeric():
+            if  -1 < int(myRPS) and int(myRPS) < 3: 
+                mStrRPS = comRPS[int(myRPS)]
+
+                print("\n당신은 " + mStrRPS + " 를 냈습니다!")
+                print("컴퓨터는 " + computer + " 를 냈습니다!")
+                playRPSGame.getRPSResult(mStrRPS, int(myRPS), com)
+
+            else:
+                playRPSGame.errorAdapter()
+            
+        elif comRPS.__contains__(myRPS):
 
             print("\n당신은 " + myRPS + " 를 냈습니다!")
             print("컴퓨터는 " + computer + " 를 냈습니다!")
-            p.getGameResult(myRPS, computer)
+            playRPSGame.getRPSResult(myRPS, comRPS.index(myRPS), com)
 
-        except:
-            print("잘못된 값을 입력하셨습니다.")
-            if p.checkGameExit() == "이어하기":
-                p.runGame()
+        else:
+            playRPSGame.errorAdapter()
+
 
 
     # 가위바위보 게임 인트로
     def introRPS():
-        global curCount
 
         print("\n***************************************************")
-        print("  가위 바위 보 게임입니다.")
+        print("      ✌ ✊✋   가위 바위 보 게임입니다.   ✋✊✌ ")
         print("***************************************************")
 
-        playCounts = input("몇 판을 진행하시겠습니까? 숫자로 입력해주세요. :")
+        playCounts = input("\n몇 판을 진행하시겠습니까? 숫자로 입력해주세요. :")
+        print("\n         *** 게임 시작 ***         \n")
 
-        try:
+
+        if playCounts.isnumeric():
+            curCount=0
+
             for i in range(0, int(playCounts)):
-                print("test1:: ", curCount)
-                p.runGame()
+                playRPSGame.runGame()
                 curCount += 1
-                print("test2:: ", curCount)
 
+                if i == int(playCounts)-1:
+                    print("================ 게임종료 =================\n")
+                    print(f"당신의 전적 : {playRPSGame.winCount}승 / {playRPSGame.drawCount}무 / {playRPSGame.loseCount}패")
+                    print(f"컴퓨터의 전적 : {playRPSGame.loseCount}승 / {playRPSGame.drawCount}무 / {playRPSGame.winCount}패\n")
 
-        except:
+                    if playRPSGame.winCount > playRPSGame.loseCount:
+                        print("==============================================")
+                        print("  🎉 대결에서 승리했습니다! 축하합니다 !! 🎉")
+                        print("==============================================\n")
+
+        else:
+
             print("입력값이 올바르지 않습니다.")
-            p.checkGameExit() == "이어하기"
-            p.introRPS()
+            playRPSGame.checkGameExit() == "이어하기"
+            playRPSGame.introRPS()
 
 
-    # 승자 출력 함수
-    def printWinner(winner):
-        #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
-        if winner == 0: print("\n컴퓨터의 승리입니다!\n")
-        else: print("\n 축하합니다! 당신의 승리입니다!\n")
+    #결과 출력 함수
+    def getRPSResult(user, userNum, com):
+        
+        score = com - userNum
+        if userNum == com :
+            playRPSGame.drawCount += 1
+            print("\n무승부 입니다!\n")
 
-    # 승자 출력 함수
-    def printWinner(winner):
-        #winner == 0 : 컴퓨터의 승리 / winner == 1: 사람의 승리
-        if winner == 0: print("\n컴퓨터의 승리입니다!\n")
-        else: print("\n 축하합니다! 당신의 승리입니다!\n")
-
-
-    # 게임 결과 출력 함수
-    def getGameResult(my, com):
-        if com == my:
-            print("무승부 입니다!")
-
-        elif my == "가위":      # 사람 - 가위
-            if com == "바위":
-                p.printWinner(0)
-            else:           # 컴퓨터 - 보
-                p.printWinner(1)
-
-        elif my == "바위":      # 사람 - 바위
-            if com == "가위":
-                p.printWinner(1)
-            else:           # 컴퓨터 - 보
-                p.printWinner(0)
-
-        elif my == "보":        # 사람 - 보
-            if com == "가위":
-                p.printWinner(0)
-            else:           # 컴퓨터 - 바위
-                p.printWinner(1)
+        elif score == 2 or score == -2:
+            playRPSGame.loseCount += 1
+            print("\n당신의 패배 입니다!\n")
+        else :
+            playRPSGame.winCount += 1
+            print("\n 축하합니다! 당신의 승리입니다!\n")
 
 
 p = playRPSGame
 p.introRPS()
-"""
+
 
 """
 📌Q3. 2개의 숫자를 입력하여 그 사이에 짝수만 출력하는 함수를 만들어 봅시다. 그리고 중앙값도 함께 출력 해봅시다.(단, 중앙값이 짝수가 아닐 경우에는 중앙값은 출력을 하지 않고, 짝수인 수만 출력한다)
@@ -265,19 +271,37 @@ find_even_number(n, m)
 """
 
 
-# 입력 오류를 더 깔끔하게 관리하는 방법이 있는지 궁금하네요!
+"""
+# 처음 제가 구현하려고 했던 함수들입니다.. ㅠ 결국 포기하고 다른 방법으로 구현하게 되었지만
+# 재귀함수를 활용하여 두개의 다른 함수들을 이용해서 값을 리턴하는 구조에 어떤 점을 수정해야하는지 질문드리고 싶습니다.
 
+# 에러:
+# 잘못된 값 입력 후 정상 값 입력시 리턴값이 이전 값(잘못된 값)으로 나옴 + 함수의 반복
+
+#제가 구현하려고 했던 방법은:
+x = input("값 입력 : ")
+checkType(x)
+-> 타입이 잘못되었을 경우 재귀함수를 통해 checkType(x) 반복
+-> 타입이 맞았을 경우 checkMinus(x)
+-> 0 이하의 값은 재귀함수를 통해 checkMinus(var) 반복
+-> 타입이 int , 0 보다 큰 값은 return 
+
+# 수정하기 위한 노력: 파이썬에서 재귀함수를 구현하기 위해서 return에서 해당 함수를 다시 불러야한다는 것을 검색을 통해 알게되었습니다. 하지만 아래 코드에서는 왜 안되는지, 오류가 나는지 모르겠습니다.. .ㅠㅠㅠ
 
 def checkMinus(var):
     if var > 0:
+        print("값리턴 ####", var)
         return int(var)
     else:
+        print("0보다 작을때 #####")
         checkType(input("0보다 큰 숫자로 입력해주세요. : "))
-
+        checkMinus(var)
 
 def checkType(var):
     if var.isnumeric:
-        checkMinus(var)
+        print("숫자입력#####")
+        checkMinus(int(var))
+
     else :
         print("잘못된 값을 입력하셨습니다.")
         checkType(input("반드시 정수로 입력해주세요 : "))
@@ -290,24 +314,54 @@ def checkLastNum(fir, sec):
         print("마지막 값은 처음 값보다 큰 수로 입력해주세요.")
         last = checkType(input("마지막 값을 다시 입력해주세요 : "))
         checkLastNum(fir, last)
-
-
 """
-#value값이 중앙값
-def getMedian(numbers):
-        median = 0
-        index = 0
-        if len(numbers)%2 == 0:
-            index = len(numbers)//2
-            median = (numbers[index-1]+numbers[index])/2
-        else:
-            index = len(numbers)//2+1
-            median = numbers[index]
 
-        if int(median) % 2 == 0:
-            return median
-"""
-    
+
+ERROR_MSG_type = "잘못된 값을 입력하셨습니다. 0보다 큰 숫자 정수를 입력해주세요."
+ERROR_MSG_bigger = "잘못된 값을 입력하셨습니다. 처음 입력한 숫자보다 큰 숫자를 입력해주세요."
+
+
+#처음 숫자의 타입이 int / 0보다 큰지 확인 후 값 리턴
+def setFirNumber():
+    num = input("처음 숫자를 입력해주세요 : ")
+    if num.isnumeric():
+        int(num)
+        if int(num) > 0:
+            return int(num)
+        else : 
+            print(ERROR_MSG_type)
+            return setFirNumber()
+    else:
+        print(ERROR_MSG_type)
+        return setFirNumber()
+
+
+#두번째 숫자의 타입이 int / 처음 값보다 큰지 확인 후 값 리턴
+def setSecNumber(num1):
+    num2 = input("마지막 숫자를 입력해주세요 : ")
+    if num2.isnumeric():
+        int(num2)
+        if int(num2) > num1:
+            return int(num2)
+        else : 
+            print(ERROR_MSG_bigger)
+            print("입력된 첫 숫자 : ", num1)
+            return setSecNumber(num1)
+    else:
+        print(ERROR_MSG_type)
+        return setSecNumber(num1)
+
+
+def checkPlayAgain():
+        again = input(" 프로그램이 종료되었습니다.\n다시 시작하시려면 스페이스바를 입력해주세요! : ")
+        again = ' '.join(again.split())
+        if (again == " " or again == ""): 
+            getCenterNum()
+        else :
+            print("\n***************************************************")
+            print("             프로그램을 종료합니다.")
+            print("***************************************************")
+
 
 def getCenterNum():
     
@@ -315,39 +369,35 @@ def getCenterNum():
         print("  중앙값이 짝수인지 확인하는 프로그램입니다.")
         print("***************************************************")
 
-        fir = input("처음 숫자를 입력해주세요 : ")
-        firNum = checkType(fir)
+        #타입 확인
+        #음수 확인
+        #처음숫자 < 마지막숫자
+        num1 = setFirNumber()
+        num2 = setSecNumber(int(num1))
 
-        sec = input("마지막 숫자를 입력해주세요 : ")
-        secNum = checkType(sec)
-        secNum = checkLastNum(firNum, secNum)
+        print("입력된 첫 숫자 : ", num1)
+        print("입력된 마지막 숫자 : ", num2)
 
-
-        print("입력된 첫 숫자 : ", firNum)
-        print("입력된 마지막 숫자 : ", secNum)
-
-        numbers = [i for i in range(firNum, secNum+1)]
+        numbers = [i for i in range(num1, num2+1)]
         numbers.sort()
         
         medianIdx = len(numbers)/2
 
         for i, var in enumerate(numbers):
-            
-            #값이 0이 아님
-            if var != 0 :
 
-                #짝수
-                if var % 2 == 0 :
-                    print(f"값 : {var}  = 짝수")
-
-                    #중앙값
-                    if numbers[int(medianIdx)] == var:
-                        print(f"값 : {var}  = * 중앙값 *")
-
+            #짝수
+            if var % 2 == 0 :
+                print(f"값 : {var}  = 짝수")
+                #중앙값
+                if numbers[int(medianIdx)] == var:
+                    print(f"값 : {var}  = * 중앙값 *")
+                #elif numbers[int(medianIdx)] -1 == var: #{1,2,3,4}의 리스트가 있을때 2는 중앙값인가?
+                #    print(f"값 : {var}  = * 중앙값 *")
         
 
-getCenterNum()
+        checkPlayAgain()
 
+getCenterNum()
 
 
 """
@@ -367,3 +417,74 @@ count_prime_number(n, m)
 
 """
 
+import math
+
+ERROR_MSG_type = "잘못된 값을 입력하셨습니다. 0보다 큰 숫자 정수를 입력해주세요."
+ERROR_MSG_bigger = "잘못된 값을 입력하셨습니다. 처음 입력한 숫자보다 큰 숫자를 입력해주세요."
+
+#처음 숫자의 타입이 int / 0보다 큰지 확인 후 값 리턴
+def setFirNumber():
+    num = input("처음 숫자를 입력해주세요 : ")
+    if num.isnumeric():
+        int(num)
+        if int(num) > 0:
+            return int(num)
+        else : 
+            print(ERROR_MSG_type)
+            return setFirNumber()
+    else:
+        print(ERROR_MSG_type)
+        return setFirNumber()
+
+
+#두번째 숫자의 타입이 int / 처음 값보다 큰지 확인 후 값 리턴
+def setSecNumber(num1):
+    num2 = input("마지막 숫자를 입력해주세요 : ")
+    if num2.isnumeric():
+        int(num2)
+        if int(num2) > num1:
+            return int(num2)
+        else : 
+            print(ERROR_MSG_bigger)
+            print("입력된 첫 숫자 : ", num1)
+            return setSecNumber(num1)
+    else:
+        print(ERROR_MSG_type)
+        return setSecNumber(num1)
+
+
+def checkPlayPrimeAgain():
+        again = input(" 프로그램이 종료되었습니다.\n다시 시작하시려면 스페이스바를 입력해주세요! : ")
+        again = ' '.join(again.split())
+        if (again == " " or again == ""): 
+            printPrimeNums()
+        else :
+            print("\n***************************************************")
+            print("             프로그램을 종료합니다.")
+            print("***************************************************")
+
+
+def printPrimeNums():
+
+    print("\n***************************************************")
+    print("  두 숫자 사이의 소수가 몇 개인지 출력하는 프로그램입니다.")
+    print("***************************************************")
+
+    fir = int(setFirNumber())
+    sec = int(setSecNumber(fir))
+
+    a = [False,False] + [True]*(sec-1)
+    primes=[]
+
+    for i in range(fir,sec+1):
+      if a[i]:
+        primes.append(i)
+        for j in range(2*i, sec+1, i):
+            a[j] = False
+    print("소수 리스트 : ", primes)
+
+    print(f"\n{fir}과 {sec} 사이의 소수들은 총 {len(primes)} 개 입니다.\n")
+    checkPlayAgain()
+
+
+printPrimeNums()
