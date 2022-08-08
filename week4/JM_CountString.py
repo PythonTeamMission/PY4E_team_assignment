@@ -54,7 +54,7 @@ if a.strip(" ") == "":
 b = input("찾을 글자를 입력해주세요: ")
 name = input("저장 파일 이름을 입력해주세요 : ")
 if name.strip(" ") == "":
-    name = "JM_countString_data"
+    name = "JM_CountString_data"
 
 printCountWord(a, b, name)
 print("\n출력된 값이 저장되었습니다. 파일 이름 : ", name)
