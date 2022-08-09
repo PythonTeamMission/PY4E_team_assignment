@@ -63,12 +63,31 @@ except:
 JM 코멘트:
 - isnumeric() 함수를 if절에 넣어 사용해보세요! 저는 그렇게 하면 try-exept문을 안 쓸 수 있어 편리했습니다.
 - 저도 소숫점을 입력받았을땐 정수로 입력받도록 넘겼어요ㅠㅠ.. 
+chabo : 저도 처음에 int로 가능한지 물어보고 걍 넘겨서 조건잡기가 어렵네요ㅜㅜ 궁금합니당!!!
 """
 
 #########################################################
 #                        chabbo                         #
 #########################################################
 
+def print_comma(number):
+    zero = 0
+    num = ''
+    for i in reversed(number):
+        num = i + num
+        zero += 1
+        if (zero == 3):
+            num = ',' + num
+            zero = 0
+    print(num)
+        
+
+number = input('숫자를 입력해주세요 : ')
+    
+if (number.isnumeric()):
+    print_comma(number)
+else:
+    print('숫자를 입력해주세요!')
 
 #########################################################
 #                          jm                           #
@@ -138,6 +157,31 @@ JM 코멘트:
 #########################################################
 #                        chabbo                         #
 #########################################################
+
+''' 크롤링해온다는 가정하에 제가 지정한 문자 찾는 걸로 생각했네요ㅜㅜ..흑'''
+
+def count_word(word):
+    lines = stock_top10.split('\n')
+    f = open("new_text.txt", 'w')
+    for i in lines:
+        f.write(i)
+
+    plus = 0
+    minus = 0
+    plus_company = []
+    minus_company = []
+
+    for idx, line in enumerate(lines) :
+        if '+' in line:
+            plus += 1 
+            plus_company.append(lines[idx-4])
+        elif '-' in line:
+            minus += 1
+            minus_company.append(lines[idx-4])
+    print(f'금일 코스피 10기업중 \n상승한 기업은 {plus}개, \n기업명 : {plus_company}')
+    print(f'하락한 기업은 {minus}개, \n기업명 : {minus_company}')
+
+count_word(stock_top10)
 
 
 #########################################################
@@ -237,6 +281,22 @@ def wrong_guest_book(a):
 #                        chabbo                         #
 #########################################################
 
+'''저는 split으로 나눠서 진행해봤습니당~:) '''
+
+def wrong_guest_book(guest_book):
+    lines = guest_book.split('\n')
+    f = open("guest_book.txt", 'w')
+    for line in lines:
+        f.write(line)
+        sep_line = line.split(',')
+        num = sep_line[1].split('-')
+        if not (sep_line[1].startswith('010') or len(sep_line[1]) == 13):
+            print(f'\n잘못 쓴 사람 : {sep_line[0]}\n잘못 쓴 번호 : {sep_line[1]}')
+
+        elif not (len(num[0]) == 3 and len(num[1]) == 4 and len(num[2]) == 4):
+            print(f'\n잘못 쓴 사람 : {sep_line[0]}\n잘못 쓴 번호 : {sep_line[1]}')
+
+wrong_guest_book(guest_book)
 
 #########################################################
 #                          jm                           #
@@ -424,8 +484,53 @@ JM 코멘트:
 #                        chabbo                         #
 #########################################################
 
+'''이번에 조건문으로 if문남발해서 좀 줄이고 싶은데 어떻게하면 좋을까요?'''
 
+def check_id(num):
+    sep_num = num.split('-')
+    if not(sep_num[0].isnumeric() or sep_num[1].isnumeric()):
+        print('입력하신 주민등록번호가 형식에 맞지 않습니다. 숫자')
+        return
 
+    if not ((len(sep_num[0]) == 6) and (len(num) == 14)):
+        print('입력하신 주민등록번호가 형식에 맞지 않습니다. 갯수')
+        return
+
+    else:
+        year = int(sep_num[0][:2])
+        month = int(sep_num[0][2:4])
+        sex = int(sep_num[1][0])
+        female = [2,4]
+        male = [1,3]
+
+        if (month == 0 or month > 12) or (sex not in female or sex not in male):
+            print('입력하신 주민등록번호가 형식에 맞지 않습니다.')
+            return
+        
+        if (00 <= year and year <= 21):
+            choose = input('2000년 이후 출생자가 맞습니까? (맞으면 o 틀리면 x)').upper()
+            if not (choose == 'O' or choose == 'X'):
+                print('O 또는 X로 입력해주세요.')
+                return 
+            if not (choose =='O' and year in [female[1], male[1]]):
+                print('입력하신 주민등록번호가 형식에 맞지 않습니다.')
+                return
+        elif (sex in [female[1], male[1]]):
+            print('입력하신 주민등록번호가 형식에 맞지 않습니다.')
+            return
+
+        if (sex in male):
+            return print(f'{year}년도 {month}월 남자')
+        elif (sex in female):
+            return print(f'{year}년도 {month}월 여자')
+        else:
+            print('입력하신 주민등록번호가 형식에 맞지 않습니다. ')
+
+            
+num = input("주민등록번호를 입력해주세요('-' 포함) : ")
+check_id(num)
+
+    
 
 #########################################################
 #                          jm                           #
@@ -506,3 +611,5 @@ def parseIdNum(idNum):
 
 #시작 코드
 parseIdNum(getIdNum())
+
+'''chabbo : 오 함수 나누니까 굉장히 깔끔해지네요!'''
