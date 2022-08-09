@@ -33,7 +33,7 @@ def wrong_guest_book(guest_book):
         if not (sep_line[1].startswith('010') or len(sep_line[1]) == 13):
             print(f'\n잘못 쓴 사람 : {sep_line[0]}\n잘못 쓴 번호 : {sep_line[1]}')
 
-        # elif not (len(num[0]) == 3 and len(num[1]) == 4 and len(num[2]) == 4):
-        #     print(f'\n잘못 쓴 사람 : {sep_line[0]}\n잘못 쓴 번호 : {sep_line[1]}')
+        elif not (len(num[0]) == 3 and len(num[1]) == 4 and len(num[2]) == 4):
+            print(f'\n잘못 쓴 사람 : {sep_line[0]}\n잘못 쓴 번호 : {sep_line[1]}')
 
 wrong_guest_book(guest_book)
