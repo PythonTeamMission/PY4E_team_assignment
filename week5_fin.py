@@ -404,3 +404,28 @@ after_100(6,21,"월")
 #########################################################
 #                          jm                           #
 #########################################################
+
+
+import datetime
+from datetime import date, timedelta
+
+days = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+
+today = date.today()
+Ddate = timedelta(days=100, hours=0, minutes=0)
+
+tdayMonth = today.month
+tdayDate = today.day
+td = datetime.datetime.today().weekday()
+tdayDay = days[td]
+
+dDay = today+Ddate
+dDayYear = dDay.year
+dDayMonth = dDay.month
+dDayDate = dDay.day
+dd = datetime.date(dDayYear, dDayMonth, dDayDate).weekday()
+dDayDay = days[dd]
+
+print(f'{tdayMonth}월 {tdayDate}일 {tdayDay}부터 100일 뒤는 {dDayMonth}월 {dDayDate}일 {dDayDay}')
+
+
