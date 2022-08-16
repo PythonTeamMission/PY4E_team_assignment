@@ -287,88 +287,90 @@ guess_numbers()
 
 import random
 
-GUESS_NUM_RULE = "* 0~100 사이의 숫자 하나를 입력해주세요."
+GUESS_NUM_RULE = "* 0~100 사이의 숫자 하나를 입력해주세요."                           # 규칙 변수화
 
-roundCount = 0
-score = 0
-answerList = []
+roundCount = 0                                                                # roundCount = n차 시도
+score = 0                                                                     # score = 정답을 맞춘 횟수 카운트
+answerList = []                                                               # answerList = 사용자가 입력한 정답 리스트
 
 #컴퓨터의 랜덤숫자 생성함수
 def createComNums():
-    comNums = []
-    for i in range(0, 3):
-        randomNum = random.randint(0, 100)
-        if not comNums.__contains__(randomNum):
-            comNums.append(randomNum)
-    return (comNums)
+    comNums = []                                                                # comNums = 컴퓨터의 랜덤 숫자 3개를 담은 리스트
+    for i in range(0, 3):                                                       # 컴퓨터 랜덤 숫자를 생성하기위한 반복문
+        randomNum = random.randint(0, 100)                                          # 랜덤 숫자 생성
+        if not comNums.__contains__(randomNum):                                     # 중복된 숫자인지 확인
+            comNums.append(randomNum)                                                   # 숫자가 중복되지 않을 때 comNums에 추가
+        else: 
+            continue                                                                    # 숫자가 중복되면 반복문 실행
+    return (comNums)                                                            # 반복문 종료시 결과값 리턴
 
-#힌트함수
+#힌트함수 / 파라미터: 최솟값, 최댓값, 사용자 입력값
 def giveHint(min, max, user):
-    closeMin = abs(user-min)
-    closeMax = abs(user-max)
-    if closeMin < closeMax:
-        if min < user:
-            print(f"최솟값은 {user}보다 작습니다.")
-        elif min > user:
-            print(f"최솟값은 {user}보다 큽니다.")
-    else:
-        if max < user:
-            print(f"최댓값은 {user}보다 작습니다.")
-        elif max > user:
-            print(f"최댓값은 {user}보다 큽니다.")
+    closeMin = abs(user-min)                                                  # closeMin: 사용자입력값 - 최소값 의 절대값
+    closeMax = abs(user-max)                                                  # closeMax: 사용자입력값 - 최대값 의 절대값
+    if closeMin < closeMax:                                                   # 사용자 입력값이 최대값보다 최소값과 가까울경우
+        if min < user:                                                              # 최소값 < 사용자입력값인 경우
+            print(f"최솟값은 {user}보다 작습니다.")                                           # 힌트출력
+        elif min > user:                                                            # 최소값 > 사용자입력값인 경우
+            print(f"최솟값은 {user}보다 큽니다.")                                            # 힌트출력
+    else:                                                                    # 사용자 입력값이 최소값보다 최대값과 가까울경우
+        if max < user:                                                              # 최대값 < 사용자입력값인 경우
+            print(f"최댓값은 {user}보다 작습니다.")                                          # 힌트출력
+        elif max > user:                                                            # 최대값 > 사용자입력값인 경우
+            print(f"최댓값은 {user}보다 큽니다.")                                           # 힌트출력
 
-#진행함수
+#진행함수 / 파라미터: comNums- 컴퓨터의 랜덤값 3개가 담겨있는 리스트
 def guessNumbers(comNums):
-    global roundCount
-    global score
-    minNum = min(comNums)
-    maxNum = max(comNums)
+    global roundCount                                                         # roundCount : 전역함수 사용명시
+    global score                                                              # score : 전역함수 사용명시
+    minNum = min(comNums)                                                     # minNum : comNums의 최소값
+    maxNum = max(comNums)                                                     # maxNum : comNums의 최대값
 
-    roundCount += 1
+    roundCount += 1                                                           # roundCount : n차 시도 + 1
     print(f"\n----- {roundCount}차 시도 -----\n")
-    uInput = input("숫자를 예측해보세요 : ")
-    userNum = 0
+    uInput = input("숫자를 예측해보세요 : ")                                       # uInput : 사용자가 입력한 문자열
+    userNum = 0                                                               # userNum : uInput을 integer로 변경했을때 저장할 변수
 
     try:
-        if -1 < int(uInput) and int(uInput) <= 100:
-            userNum = int(uInput)
+        if -1 < int(uInput) and int(uInput) <= 100:                                 # 1. 입력받은 uInput 타입 - integer로 변환 2. 받은 입력값이 0~100 사이인지 확인 
+            userNum = int(uInput)                                                   # 위 조건을 충족할때 uInput를 userNum에 대입
 
-            if answerList.__contains__(userNum):
-                print("이미 예측에 사용한 문자입니다.")
-                return guessNumbers(comNums)
+            if answerList.__contains__(userNum):                                        # 이미 입력한 값인경우 확인
+                print("이미 예측에 사용한 문자입니다.")                                              # 이미 사용한값 안내 출력
+                return guessNumbers(comNums)                                                  # 재귀함수 - 다시시작
         else:
-            print(GUESS_NUM_RULE)
-            return guessNumbers(comNums)
+            print(GUESS_NUM_RULE)                                                   # 입력값이 0~100이 아닌경우
+            return guessNumbers(comNums)                                            # 재귀함수 - 다시시작
 
     except:
-        print(GUESS_NUM_RULE)
-        return guessNumbers(comNums)
+        print(GUESS_NUM_RULE)                                                      # 입력값이 숫자가 아닐경우, 룰 출력
+        return guessNumbers(comNums)                                               # 재귀함수 - 다시시작
 
-    answerList.append(userNum)
+    answerList.append(userNum)                                                 # 위 조건을 모두 충족할 경우 : answerList에 유저 입력값 추가
 
-    if roundCount > 4 and score < 2:
-        giveHint(minNum, maxNum, userNum)
+    if roundCount > 4 and score < 2:                                           # 5차 시도 이상 & 정답횟수가 0,1인 경우
+        giveHint(minNum, maxNum, userNum)                                           # 힌트 함수 실행
 
-    if comNums.__contains__(userNum):
+    if comNums.__contains__(userNum):                                         # comNums에 userNum이 포함될 경우
         if userNum == minNum : print(f"축하합니다!! 숫자를 맞추셨습니다! {userNum}은 최솟값입니다.")
         elif userNum == maxNum : print(f"축하합니다!! 숫자를 맞추셨습니다! {userNum}은 최댓값입니다.")
         else: print(f"축하합니다!! 숫자를 맞추셨습니다! {userNum}은 중간값입니다.")
-        score += 1
+        score += 1                                                                  # score에 정답횟수 +1
 
 
 #실행코드
 print("\n----------------------------------------------")
 print("       0~100 사이의 세개의 숫자를 맞추는 게임입니다.")
 print("----------------------------------------------\n")
-#print(GUESS_NUM_RULE)                      #답안코드
-comNums = createComNums()
-print(comNums)
+print(GUESS_NUM_RULE)                                                         # 규칙 출력
+comNums = createComNums()                                                     # reateComNums(): 컴퓨터의 랜덤리스트 생성, comNums: 반환된 리스트
+#print(comNums)                      #답안코드
 
-while score < 3:
-    guessNumbers(comNums)
+while score < 3:                                                              # 정답 스코어가 3미만인 경우 반복문 실행
+    guessNumbers(comNums)                                                           # guessNumbers(comNums) : 사용자 값 입력, 오류확인, 정답출력, score 관리 함수 실행
 
 print("\n------------------- 게임종료 ---------------------\n")
-print(f"               {roundCount}번의 시도에 예측 성공!              ")
+print(f"               {roundCount}번의 시도에 예측 성공!              ")          # roundCount: guessNumbers()함수 반복실행 횟수
 
 
 """
