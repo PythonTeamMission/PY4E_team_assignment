@@ -33,7 +33,7 @@ chosun_king = "태조,정종,태종,세종,문종,단종,세조,예종,성종,�
 #딕셔너리 강의 실습에서 배웠던 알고리즘을 활용해봤습니다.
 
 # 중복되는 왕 이름과 수를 출력하는 함수
-def kingCount():
+def kingCount(korea_king, chosun_king):
     totalCount = 0                                                                      # totalCount: 중복되는 왕 이름의 수
     kingDict = dict()                                                                   # kingDict: 고려와 조선 왕을 모두 가진 딕셔너리
 
@@ -53,4 +53,7 @@ def kingCount():
 
 
 # 실행코드
-kingCount()
+print('\n-------------------------------------------')
+print('고려시대와 조선시대의 중복되는 왕 이름을 출력하는 프로그램입니다.')
+print('-------------------------------------------')
+kingCount(korea_king, chosun_king)
