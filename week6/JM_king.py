@@ -1,3 +1,4 @@
+
 """
 📌Q1. 역사 문제를 하나 내보겠습니다. 고려시대와 조선시대 왕 이름 중에서 고려에도 있고 조선에도 있는 이름은 몇개 일까요? 한 번에 딱 안 떠오른다면 왕 이름을 드릴테니 파이썬 함수로 만들어서 출력 해봅시다.
 
@@ -33,7 +34,7 @@ chosun_king = "태조,정종,태종,세종,문종,단종,세조,예종,성종,�
 #딕셔너리 강의 실습에서 배웠던 알고리즘을 활용해봤습니다.
 
 # 중복되는 왕 이름과 수를 출력하는 함수
-def kingCount(korea_king, chosun_king):
+def kingCount():
     totalCount = 0                                                                      # totalCount: 중복되는 왕 이름의 수
     kingDict = dict()                                                                   # kingDict: 고려와 조선 왕을 모두 가진 딕셔너리
 
@@ -53,7 +54,5 @@ def kingCount(korea_king, chosun_king):
 
 
 # 실행코드
-print('\n-------------------------------------------')
-print('고려시대와 조선시대의 중복되는 왕 이름을 출력하는 프로그램입니다.')
-print('-------------------------------------------')
-kingCount(korea_king, chosun_king)
+kingCount()
+
