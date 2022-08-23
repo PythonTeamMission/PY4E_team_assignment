@@ -46,6 +46,36 @@ chosun_king = "태조,정종,태종,세종,문종,단종,세조,예종,성종,�
 #########################################################
 
 
+def king(korea, chosun):
+    king_dict = dict()
+
+    korea = korea.split(",")
+    chosun = chosun.split(",")
+
+    for kor in korea:
+        king_dict[kor] = 1
+
+    for cho in chosun:
+        if king_dict.get(cho, 0) >= 1:
+            king_dict[cho] = king_dict[cho] + 1
+        else:
+            continue
+
+    repeated_king = []
+    for (k, v) in king_dict.items():
+        if v >= 2:
+            repeated_king.append(k)
+
+    count = 0
+    for king in repeated_king:
+        print(f"조선과 고려에 모두 있는 왕 이름 : {king}")
+        count = count + 1
+    print(f"조선과 고려에 모두 있는 왕 이름은 총 {count}개 입니다")
+
+print(king(korea_king, chosun_king))
+
+
+
 #########################################################
 #                        chabbo                         #
 #########################################################
@@ -81,14 +111,6 @@ def kingCount():
 
 # 실행코드
 kingCount()
-
-
-
-
-
-
-
-
 
 
 
@@ -155,12 +177,6 @@ print('\n-------------------------------------------')
 print('보너스 대상자와 면담 대상자를 출력하는 프로그램입니다.')
 print('-------------------------------------------')
 sales_management(member_names, member_records)
-
-
-
-
-
-
 
 
 
@@ -309,3 +325,7 @@ def good_customer(info):
 #실행함수
 good_customer(info)
             
+ 
+ 
+ 
+ 
